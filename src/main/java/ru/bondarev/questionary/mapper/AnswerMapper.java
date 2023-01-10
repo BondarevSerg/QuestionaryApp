@@ -4,26 +4,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.bondarev.questionary.dto.request.AnswerRequest;
 import ru.bondarev.questionary.dto.response.AnswerResponse;
-import ru.bondarev.questionary.dto.response.QuizResponse;
 import ru.bondarev.questionary.entity.Answer;
 import ru.bondarev.questionary.entity.Question;
-import ru.bondarev.questionary.repositories.QuestionRepository;
+
 
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * мапер ответов
+ * маппер ответов
  *
  */
 @Service
 @RequiredArgsConstructor
 public class AnswerMapper {
 
-    private  final QuestionMapper questionMapper;
 
     /**
      * ответ из энтити в dto

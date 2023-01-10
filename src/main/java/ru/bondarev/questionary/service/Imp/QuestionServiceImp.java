@@ -64,15 +64,7 @@ public class QuestionServiceImp implements QuestionService {
     @Override
     @Transactional
     public void saveQuestion(QuestionRequest questionRequest) {
-//        questionRepository.save(
-//                Question.builder()
-//                        .id(questionRequest.getId())
-//                        .title(questionRequest.getTitle())
-//                        .quiz(Quiz.builder()
-//                                .id(questionRequest.getQuizID())
-//                                .build())
-//                        .answers(answerMapper.requestToEntityList(questionRequest.getAnswerRequestList()))
-//                        .build());
+
         questionRepository.save(questionMapper.requestToEntity(questionRequest));
     }
 

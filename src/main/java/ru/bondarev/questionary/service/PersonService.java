@@ -31,7 +31,7 @@ public interface PersonService {
      *
      * @param
      */
-    @Transactional
+
     void savePerson(PersonRequest personRequest);
 
     /**
