@@ -25,9 +25,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class QuestionMapper {
 
-    //    private final AnswerMapper answerMapper;
-//    private  final  QuizMapper quizMapper;
-
 
     /**
      * вопрос из энтити в dto
@@ -46,7 +43,7 @@ public class QuestionMapper {
                                 .title(a.getTitle())
                                 .questionId(a.getQuestion().getId())
                                 .build())
-                              .collect(Collectors.toList()))
+                        .collect(Collectors.toList()))
                 .build();
     }
 
@@ -79,11 +76,11 @@ public class QuestionMapper {
                 .quiz(Quiz.builder()
                         .id(questionRequest.getQuizID())
                         .build())
-               .answers(questionRequest.getAnswerRequestList().stream()
-                       .map(a -> Answer.builder()
-                               .id(a.getId())
-                               .build())
-                       .collect(Collectors.toList()))
+                .answers(questionRequest.getAnswerRequestList().stream()
+                        .map(a -> Answer.builder()
+                                .id(a.getId())
+                                .build())
+                        .collect(Collectors.toList()))
                 .build();
     }
 

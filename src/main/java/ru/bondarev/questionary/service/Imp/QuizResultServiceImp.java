@@ -38,7 +38,7 @@ public class QuizResultServiceImp implements QuizResultService {
     }
 
     /**
-     * Список результатов по id Персона
+     * Список результатов по id Пользователя
      *
      * @param personId
      * @return List<QuizResultResponse>

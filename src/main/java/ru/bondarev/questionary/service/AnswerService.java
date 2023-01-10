@@ -32,7 +32,7 @@ public interface AnswerService {
      *
      * @param
      */
-    @Transactional
+
     void saveAnswer(AnswerRequest answerRequest);
 
     /**

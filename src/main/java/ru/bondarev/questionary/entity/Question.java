@@ -25,7 +25,7 @@ public class Question {
     private Long id;
 
     /**
-     * Вопрос
+     * Текст вопроса
      */
     @Column(name = "title")
     private String title;

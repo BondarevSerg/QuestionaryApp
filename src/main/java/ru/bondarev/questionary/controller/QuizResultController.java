@@ -69,7 +69,7 @@ public class QuizResultController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
     /**
-     * удаление результата
+     * удаление результата по id
      *
      * @param id
      * @return
@@ -86,8 +86,7 @@ public class QuizResultController {
      * @return
      */
     @PutMapping("/update_quizresult")
-    public ResponseEntity<HttpStatus> updateQuizResult(
-                                                       @RequestBody QuizResultRequest quizResultRequest) {
+    public ResponseEntity<HttpStatus> updateQuizResult(@RequestBody QuizResultRequest quizResultRequest) {
         quizResultService.updateQuizResult(quizResultRequest);
         return ResponseEntity.ok(HttpStatus.OK);
     }

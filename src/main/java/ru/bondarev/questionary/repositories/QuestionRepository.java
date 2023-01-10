@@ -9,5 +9,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
 
     List<Question> findAllByQuizId(long quizId);
-    Question findByQuizIdAndId(long quizId, long id );
+
 }
