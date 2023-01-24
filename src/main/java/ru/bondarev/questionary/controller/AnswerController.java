@@ -72,7 +72,7 @@ public class AnswerController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
     /**
-     * удаление ответа по id
+     * удаление ответа
      *
      * @param id
      * @return

@@ -17,7 +17,7 @@ import ru.bondarev.questionary.service.Imp.PersonServiceImp;
 import java.util.List;
 
 /**
- * контроллер пользователей
+ * контроллер персон
  */
 @RestController
 @RequestMapping("/persons")
@@ -27,7 +27,7 @@ public class PersonController {
     private  final PersonServiceImp personService;
 
     /**
-     * Получение списка пользователей
+     * Получение списка персон
      *
      * @return
      */
@@ -37,7 +37,7 @@ public class PersonController {
     }
 
     /**
-     * Получение  пользователя по id
+     * Получение  персона по id
      *
      * @return
      */
@@ -46,12 +46,7 @@ public class PersonController {
         return personService.getPersonById(id);
     }
 
-    /**
-     * сохранение нового пользователя
-     * @param personRequest
-     * @param bindingResult
-     * @return
-     */
+
     @PostMapping("/new_person")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid PersonRequest personRequest,
                                              BindingResult bindingResult) {
@@ -71,7 +66,7 @@ public class PersonController {
 
 
     /**
-     * удаление пользователя по id
+     * удаление персона по id
      *
      * @return
      */
@@ -82,9 +77,9 @@ public class PersonController {
     }
 
     /**
-     * апдейт пользователя
+     * апдейт персона
      *
-     * @param personRequest
+     * @param
      * @return
      */
     @PutMapping("/update_person")

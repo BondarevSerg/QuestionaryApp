@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.List;
 
 /**
- * Ответ
+ * Ответы
  */
 @Entity
 @Table(name = "answers")
@@ -32,7 +32,7 @@ public class Answer {
     private Question question;
 
     /**
-     * Текст ответа
+     * Ответы
      */
     @Column(name = "answer")
     private String title;

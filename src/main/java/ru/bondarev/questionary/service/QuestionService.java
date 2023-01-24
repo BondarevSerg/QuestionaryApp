@@ -33,7 +33,7 @@ public interface QuestionService {
      */
 
 
-
+    @Transactional
     void saveQuestion(QuestionRequest questionRequest);
 
     /**

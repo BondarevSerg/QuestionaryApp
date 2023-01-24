@@ -13,9 +13,6 @@ import ru.bondarev.questionary.service.QuizService;
 
 import java.util.List;
 
-/**
- * Сервис по работе с анкетой
- */
 @Service
 @RequiredArgsConstructor
 public class QuizServiceImp implements QuizService {
@@ -26,25 +23,15 @@ public class QuizServiceImp implements QuizService {
     private final QuestionMapper questionMapper;
 
 
-    /**
-     * dto анкеты по id
-     *
-     * @param id идентификатор
-     * @return
-     */
+
     @Override
     public QuizResponse getQuizById(Long id) {
-        var quiz = quizRepository.findById(id)
+       var quiz = quizRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найдена анкета по идентификатору: " + id));
 
         return quizMapper.entityToResponse(quiz);
     }
 
-    /**
-     * список всех анкет
-     *
-     * @return
-     */
     @Override
     public List<QuizResponse> getAllQuiz() {
         List<Quiz> quizzes = quizRepository.findAll();
@@ -52,21 +39,14 @@ public class QuizServiceImp implements QuizService {
         return quizMapper.entityToResponseList(quizzes);
     }
 
-    /**
-     * сохранение анкеты
-     *
-     * @param quizRequest
-     */
     @Override
     @Transactional
     public void saveQuiz(QuizRequest quizRequest) {
+
+
         quizRepository.save(quizMapper.requestToEntity(quizRequest));
     }
 
-    /**
-     * удаление анкеты по id
-     * @param id
-     */
     @Override
     @Transactional
     public void deleteQuiz(Long id) {
@@ -75,10 +55,6 @@ public class QuizServiceImp implements QuizService {
         quizRepository.delete(quiz);
     }
 
-    /**
-     * апдейт анкеты
-     * @param quizRequest
-     */
     @Override
     public void updateQuiz(QuizRequest quizRequest) {
         var quiz = quizRepository.findById(quizRequest.getId())

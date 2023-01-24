@@ -6,9 +6,6 @@ import lombok.*;
 
 import java.util.List;
 
-/**
- * Пользователь
- */
 @Entity
 @Table(name = "person")
 @Data
@@ -19,7 +16,7 @@ import java.util.List;
 public class Person {
 
     /**
-     * id пользователя
+     * id персона
      */
     @Id
     @Column(name = "id")
@@ -34,7 +31,7 @@ public class Person {
     private String login;
 
     /**
-     * Имя
+     * имя
      */
     @Column(name = "firstname")
     private String firstName;

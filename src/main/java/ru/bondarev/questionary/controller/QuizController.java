@@ -68,7 +68,7 @@ public class QuizController {
     }
 
     /**
-     * удаление анкеты по id
+     * удаление анкеты
      *
      * @param id
      * @return

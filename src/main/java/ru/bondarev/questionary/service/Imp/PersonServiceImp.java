@@ -12,7 +12,7 @@ import ru.bondarev.questionary.service.PersonService;
 import java.util.List;
 
 /**
- * сервис работы с пользователем
+ * сервис работы с персон
  */
 @Service
 @RequiredArgsConstructor
@@ -66,7 +66,7 @@ public class PersonServiceImp implements PersonService {
         personRepository.delete(person);
     }
     /**
-     * апдейт персона
+     * изменение персона
      * @param personRequest
      */
     @Override

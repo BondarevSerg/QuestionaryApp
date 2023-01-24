@@ -52,10 +52,7 @@ public class AnswerServiceImp implements AnswerService {
     }
 
 
-    /** сохранение ответа
-     *
-     * @param answerRequest
-     */
+
     @Override
     public void saveAnswer(AnswerRequest answerRequest) {
         answerRepository.save(
@@ -68,10 +65,6 @@ public class AnswerServiceImp implements AnswerService {
                         .build());
     }
 
-    /**
-     * Удаление ответа по id
-     * @param id
-     */
     @Override
     public void deleteAnswer(Long id) {
         var answer = answerRepository.findById(id)
@@ -79,10 +72,6 @@ public class AnswerServiceImp implements AnswerService {
         answerRepository.delete(answer);
     }
 
-    /**
-     * апдейт ответа
-     * @param answerRequest
-     */
     @Override
     public void updateAnswer(AnswerRequest answerRequest) {
         var answer = answerRepository.findById(answerRequest.getId())

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- маппер персона
+ мапер персона
  */
 @Service
 @RequiredArgsConstructor

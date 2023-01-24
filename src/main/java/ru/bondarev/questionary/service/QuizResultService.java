@@ -30,7 +30,7 @@ public interface QuizResultService {
      *
      * @param
      */
-
+    @Transactional
     void saveQuizResult(QuizResultRequest quizResultRequest);
 
     /**

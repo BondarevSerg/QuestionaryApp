@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- маппер результата
+ мапер результата
  */
 @Service
 @RequiredArgsConstructor
