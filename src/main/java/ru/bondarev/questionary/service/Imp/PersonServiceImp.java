@@ -10,6 +10,9 @@ import ru.bondarev.questionary.repositories.PersonRepository;
 import ru.bondarev.questionary.service.PersonService;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * сервис работы с пользователем
@@ -20,10 +23,11 @@ public class PersonServiceImp implements PersonService {
 
     private final PersonRepository personRepository;
 
-    private  final PersonMapper personMapper;
+    private final PersonMapper personMapper;
 
     /**
-     * поиск персона по id
+     * поиск пользователя по id
+     *
      * @param id
      * @return PersonResponse
      */
@@ -35,47 +39,66 @@ public class PersonServiceImp implements PersonService {
     }
 
     /**
-     * список всех персонов
+     * список всех пользователей
+     *
      * @return
      */
     @Override
     public List<PersonResponse> getAllPerson() {
-        List<Person>personList = personRepository.findAll();
+        List<Person> personList = personRepository.findAll();
 
         return personMapper.entityToResponseList(personList);
     }
 
 
     /**
-     * сохранение персона
+     * сохранение(регистрация) нового пользователя
+     *
      * @param personRequest
      */
     @Override
     public void savePerson(PersonRequest personRequest) {
-        personRepository.save(personMapper.requestToEntity(personRequest));
 
+        Optional<Person> person = Optional.ofNullable(personRepository.findByLogin(personRequest.getLogin()));
+
+        if (person.isEmpty()) {
+            personRepository.save(personMapper.requestToEntity(personRequest));
+        }
     }
+
     /**
-     * удаление  персона по id
+     * удаление  пользователя по id
+     *
      * @param id
      */
     @Override
     public void deletePerson(Long id) {
         Person person = personRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найден персон по идентификатору: " + id));
-        personRepository.delete(person);
+        //админ не может себя удалить
+        Set<String> roles = person.getRoles().stream()
+                .map(role -> role.getName())
+                .collect(Collectors.toSet());
+
+        if (!(roles.contains("ROLE_ADMIN"))) {
+            personRepository.delete(person);
+        }
     }
+
     /**
-     * апдейт персона
+     * апдейт пользователя
+     *
      * @param personRequest
      */
     @Override
-    public void updatePerson(PersonRequest personRequest) {
-       var person = personRepository.findById(personRequest.getId())
+    public void updatePerson(Long id, PersonRequest personRequest) {
+        var person = personRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найден персон по идентификатору"));
+
         person.setLogin(personRequest.getLogin());
         person.setFirstName(personRequest.getFirstName());
         person.setLastName(personRequest.getLastName());
+        person.setPassword(personRequest.getPassword());
         personRepository.save(person);
     }
 }

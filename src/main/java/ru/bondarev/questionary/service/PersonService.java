@@ -44,5 +44,5 @@ public interface PersonService {
     /**
      * апдейт персона
      */
-    void updatePerson(PersonRequest personRequest);
+    void updatePerson(Long id, PersonRequest personRequest);
 }

@@ -5,4 +5,5 @@ import ru.bondarev.questionary.entity.Person;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
+    Person findByLogin(String login);
 }

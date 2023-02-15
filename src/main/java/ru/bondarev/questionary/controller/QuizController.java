@@ -50,19 +50,8 @@ public class QuizController {
      * @param
      * @return
      */
-    @PostMapping("/new_quiz")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid QuizRequest quizRequest,
-                                             BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            StringBuilder errorMsg = new StringBuilder();
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors) {
-                errorMsg.append(error.getField())
-                        .append("-").append(error.getDefaultMessage())
-                        .append(";");
-            }
-
-        }
+    @PostMapping()
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid QuizRequest quizRequest) {
         quizService.saveQuiz(quizRequest);
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -73,7 +62,7 @@ public class QuizController {
      * @param id
      * @return
      */
-    @DeleteMapping("/delete_quiz/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteQuizById(@PathVariable("id") Long id) {
         quizService.deleteQuiz(id);
         return ResponseEntity.ok(HttpStatus.OK);
@@ -85,7 +74,7 @@ public class QuizController {
      * @param
      * @return
      */
-    @PutMapping("/update_quiz")
+    @PutMapping("/update")
     public ResponseEntity<HttpStatus> updateQuiz(@RequestBody QuizRequest quizRequest) {
         quizService.updateQuiz(quizRequest);
         return ResponseEntity.ok(HttpStatus.OK);
