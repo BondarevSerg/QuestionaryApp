@@ -1,22 +1,31 @@
 package ru.bondarev.questionary.mapper;
 
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.bondarev.questionary.dto.request.PersonRequest;
 import ru.bondarev.questionary.dto.response.PersonResponse;
 import ru.bondarev.questionary.entity.Person;
-import ru.bondarev.questionary.repositories.PersonRepository;
+import ru.bondarev.questionary.repositories.RoleRepository;
+
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- мапер персона
+ маппер персона
  */
 @Service
 @RequiredArgsConstructor
+
+
 public class PersonMapper {
+
+    private  BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+    private final RoleRepository roleRepository;
 
     /**
      * из энтити в dto
@@ -56,10 +65,11 @@ public class PersonMapper {
      */
     public Person requestToEntity(PersonRequest personRequest){
         return Person.builder()
-                .id(personRequest.getId())
                 .login(personRequest.getLogin())
                 .firstName(personRequest.getFirstName())
                 .lastName(personRequest.getLastName())
+                .password(bCryptPasswordEncoder.encode(personRequest.getPassword()))//пароль хэшируется для безопасности
+                .roles(Collections.singleton(roleRepository.findByName("ROLE_USER")))
                 .build();
     }
 

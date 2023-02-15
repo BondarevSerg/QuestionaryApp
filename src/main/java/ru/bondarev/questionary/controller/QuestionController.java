@@ -4,13 +4,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import ru.bondarev.questionary.dto.request.QuestionRequest;
-import ru.bondarev.questionary.dto.request.QuizRequest;
 import ru.bondarev.questionary.dto.response.QuestionResponse;
-import ru.bondarev.questionary.dto.response.QuizResponse;
 import ru.bondarev.questionary.service.QuestionService;
 
 import java.util.List;
@@ -42,7 +38,7 @@ public class QuestionController {
      * @param
      * @return
      */
-    @GetMapping("/question/{id}")
+    @GetMapping("question/{id}")
     public QuestionResponse getQuestion( @PathVariable("id") Long id) {
         return questionService.getQuestionById(id);
     }
@@ -53,24 +49,14 @@ public class QuestionController {
      * @param questionRequest
      * @return
      */
-    @PostMapping("/new-question")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid QuestionRequest questionRequest,
-                                             BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            StringBuilder errorMsg = new StringBuilder();
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors) {
-                errorMsg.append(error.getField())
-                        .append("-").append(error.getDefaultMessage())
-                        .append(";");
-            }
+    @PostMapping()
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid QuestionRequest questionRequest) {
 
-        }
         questionService.saveQuestion(questionRequest);
         return ResponseEntity.ok(HttpStatus.OK);
     }
     /**
-     * удаление вопроса
+     * удаление вопроса по id
      *
      * @param id
      * @return

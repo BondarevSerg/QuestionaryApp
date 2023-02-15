@@ -31,7 +31,7 @@ public interface PersonService {
      *
      * @param
      */
-    @Transactional
+
     void savePerson(PersonRequest personRequest);
 
     /**
@@ -44,5 +44,5 @@ public interface PersonService {
     /**
      * апдейт персона
      */
-    void updatePerson(PersonRequest personRequest);
+    void updatePerson(Long id, PersonRequest personRequest);
 }

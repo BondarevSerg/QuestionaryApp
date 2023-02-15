@@ -3,6 +3,9 @@ package ru.bondarev.questionary.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * Результат опроса
+ */
 @Entity
 @Table(name = "quizresult")
 @Data
@@ -21,7 +24,7 @@ public class QuizResult {
     private Long id;
 
     /**
-     * персон
+     * Пользователь
      */
     @ManyToOne
     @JoinColumn(name = "personid", referencedColumnName = "id")
@@ -47,7 +50,5 @@ public class QuizResult {
     @ManyToOne
     @JoinColumn(name = "answerid", referencedColumnName = "id")
     private Answer answer;
-
-
 
 }

@@ -4,8 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import ru.bondarev.questionary.dto.request.QuizResultRequest;
 import ru.bondarev.questionary.dto.response.QuizResultResponse;
@@ -18,7 +16,7 @@ import java.util.List;
  * контроллер результатов
  */
 @RestController
-@RequestMapping("/quizresult")
+@RequestMapping("/quizresults")
 @RequiredArgsConstructor
 public class QuizResultController {
 
@@ -52,29 +50,19 @@ public class QuizResultController {
      * @param quizResultRequest
      * @return
      */
-    @PostMapping("/new_quizResult")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid QuizResultRequest quizResultRequest,
-                                             BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            StringBuilder errorMsg = new StringBuilder();
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors) {
-                errorMsg.append(error.getField())
-                        .append("-").append(error.getDefaultMessage())
-                        .append(";");
-            }
+    @PostMapping()
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid QuizResultRequest quizResultRequest) {
 
-        }
         quizResultService.saveQuizResult(quizResultRequest);
         return ResponseEntity.ok(HttpStatus.OK);
     }
     /**
-     * удаление результата
+     * удаление результата по id
      *
      * @param id
      * @return
      */
-    @DeleteMapping("/delete_quizresult/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteQuizById(@PathVariable("id") Long id) {
         quizResultService.deleteQuizResult(id);
         return ResponseEntity.ok(HttpStatus.OK);
@@ -85,9 +73,8 @@ public class QuizResultController {
      * @param quizResultRequest
      * @return
      */
-    @PutMapping("/update_quizresult")
-    public ResponseEntity<HttpStatus> updateQuizResult(
-                                                       @RequestBody QuizResultRequest quizResultRequest) {
+    @PutMapping("/update")
+    public ResponseEntity<HttpStatus> updateQuizResult(@RequestBody QuizResultRequest quizResultRequest) {
         quizResultService.updateQuizResult(quizResultRequest);
         return ResponseEntity.ok(HttpStatus.OK);
     }

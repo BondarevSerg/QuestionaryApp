@@ -4,11 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.bondarev.questionary.dto.request.QuizResultRequest;
 import ru.bondarev.questionary.dto.response.QuizResultResponse;
-
 import ru.bondarev.questionary.entity.*;
-
 import ru.bondarev.questionary.mapper.QuizResultMapper;
-
 import ru.bondarev.questionary.repositories.*;
 import ru.bondarev.questionary.service.QuizResultService;
 
@@ -38,7 +35,7 @@ public class QuizResultServiceImp implements QuizResultService {
     }
 
     /**
-     * Список результатов по id Персона
+     * Список результатов по id Пользователя
      *
      * @param personId
      * @return List<QuizResultResponse>

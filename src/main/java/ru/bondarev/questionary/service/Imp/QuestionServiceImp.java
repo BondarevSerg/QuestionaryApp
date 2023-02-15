@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bondarev.questionary.dto.request.QuestionRequest;
-import ru.bondarev.questionary.dto.request.QuizRequest;
 import ru.bondarev.questionary.dto.response.QuestionResponse;
-import ru.bondarev.questionary.entity.Answer;
-import ru.bondarev.questionary.entity.Question;
 import ru.bondarev.questionary.entity.Quiz;
 import ru.bondarev.questionary.mapper.AnswerMapper;
 import ru.bondarev.questionary.mapper.QuestionMapper;
@@ -64,15 +61,7 @@ public class QuestionServiceImp implements QuestionService {
     @Override
     @Transactional
     public void saveQuestion(QuestionRequest questionRequest) {
-//        questionRepository.save(
-//                Question.builder()
-//                        .id(questionRequest.getId())
-//                        .title(questionRequest.getTitle())
-//                        .quiz(Quiz.builder()
-//                                .id(questionRequest.getQuizID())
-//                                .build())
-//                        .answers(answerMapper.requestToEntityList(questionRequest.getAnswerRequestList()))
-//                        .build());
+
         questionRepository.save(questionMapper.requestToEntity(questionRequest));
     }
 

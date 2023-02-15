@@ -4,16 +4,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import ru.bondarev.questionary.dto.request.AnswerRequest;
-import ru.bondarev.questionary.dto.request.QuestionRequest;
-import ru.bondarev.questionary.dto.request.QuizRequest;
 import ru.bondarev.questionary.dto.response.AnswerResponse;
-import ru.bondarev.questionary.dto.response.QuestionResponse;
 import ru.bondarev.questionary.service.Imp.AnswerServiceImp;
-
 import java.util.List;
 
 /**
@@ -29,7 +23,7 @@ public class AnswerController {
     /**
      * Получение списка ответов по id вопроса
      *
-     * @param
+     * @param questionId
      * @return
      */
     @GetMapping("/{questionId}")
@@ -56,23 +50,14 @@ public class AnswerController {
      * @return
      */
     @PostMapping("/new_answer")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid AnswerRequest answerRequest,
-                                             BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            StringBuilder errorMsg = new StringBuilder();
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors) {
-                errorMsg.append(error.getField())
-                        .append("-").append(error.getDefaultMessage())
-                        .append(";");
-            }
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid AnswerRequest answerRequest) {
 
-        }
         answerService.saveAnswer(answerRequest);
         return ResponseEntity.ok(HttpStatus.OK);
     }
+
     /**
-     * удаление ответа
+     * удаление ответа по id
      *
      * @param id
      * @return
@@ -82,6 +67,7 @@ public class AnswerController {
         answerService.deleteAnswer(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
+
     /**
      * апдейт ответа
      *
@@ -93,6 +79,5 @@ public class AnswerController {
         answerService.updateAnswer(answerRequest);
         return ResponseEntity.ok(HttpStatus.OK);
     }
-
 
 }
