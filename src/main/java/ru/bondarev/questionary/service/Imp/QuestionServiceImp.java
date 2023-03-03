@@ -59,7 +59,7 @@ public class QuestionServiceImp implements QuestionService {
      * @param questionRequest
      */
     @Override
-    @Transactional
+
     public void saveQuestion(QuestionRequest questionRequest) {
 
         questionRepository.save(questionMapper.requestToEntity(questionRequest));
@@ -71,7 +71,7 @@ public class QuestionServiceImp implements QuestionService {
      * @param id
      */
     @Override
-    @Transactional
+
     public void deleteQuestion(Long id) {
         var question = questionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найден вопрос по id"));
@@ -85,9 +85,9 @@ public class QuestionServiceImp implements QuestionService {
      * @param questionRequest
      */
     @Override
-    public void updateQuestion(QuestionRequest questionRequest) {
+    public void updateQuestion(Long id, QuestionRequest questionRequest) {
 
-        var question = questionRepository.findById(questionRequest.getId())
+        var question = questionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найден вопрос по id"));
 
         question.setTitle(questionRequest.getTitle());

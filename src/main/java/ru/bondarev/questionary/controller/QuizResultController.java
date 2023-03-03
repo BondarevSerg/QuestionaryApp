@@ -1,5 +1,8 @@
 package ru.bondarev.questionary.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/quizresults")
 @RequiredArgsConstructor
+@Tag(
+        name = "Результаты опроса",
+        description = "Все методы для работы с результатом"
+)
 public class QuizResultController {
 
 
@@ -29,18 +36,20 @@ public class QuizResultController {
      * @return
      */
     @GetMapping()
+    @Operation(summary = "Получение списка результатов опроса")
     public List<QuizResultResponse> getAllQuizResult() {
         return quizResultService.getAllQuizResult();
     }
 
     /**
-     * Получение списка результатов по id персона
+     * Получение списка результатов по id пользователя
      *
      * @param
      * @return
      */
     @GetMapping("/{id}")
-    public List<QuizResultResponse> getAllQuizResult(@PathVariable("id") Long personId) {
+    @Operation(summary = "Получение списка результатов по id пользователя")
+    public List<QuizResultResponse> getAllQuizResult(@Parameter(description = "id пользователя")@PathVariable("id") Long personId) {
         return quizResultService.getQuizResultsByPersonId(personId);
     }
 
@@ -51,6 +60,7 @@ public class QuizResultController {
      * @return
      */
     @PostMapping()
+    @Operation(summary = "Сохранение результата")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid QuizResultRequest quizResultRequest) {
 
         quizResultService.saveQuizResult(quizResultRequest);
@@ -63,19 +73,23 @@ public class QuizResultController {
      * @return
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteQuizById(@PathVariable("id") Long id) {
+    @Operation(summary = "Удаление результата")
+    public ResponseEntity<HttpStatus> deleteQuizById(@Parameter(description = "id пользователя")@PathVariable("id") Long id) {
         quizResultService.deleteQuizResult(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
     /**
-     * апдейт результата
+     * обновление результата
      *
      * @param quizResultRequest
      * @return
      */
-    @PutMapping("/update")
-    public ResponseEntity<HttpStatus> updateQuizResult(@RequestBody QuizResultRequest quizResultRequest) {
-        quizResultService.updateQuizResult(quizResultRequest);
+    @PutMapping("/{id}")
+    @Operation(summary = "обновление результата по id")
+    public ResponseEntity<HttpStatus> updateQuizResult(@Parameter(description = "id пользователя")
+                                                           @PathVariable("id") Long id,
+                                                           @RequestBody QuizResultRequest quizResultRequest) {
+        quizResultService.updateQuizResult(id, quizResultRequest);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }

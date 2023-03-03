@@ -1,5 +1,8 @@
 package ru.bondarev.questionary.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/answers")
 @RequiredArgsConstructor
+@Tag(
+        name = "Ответы",
+        description = "Все методы для работы с ответами"
+)
 public class AnswerController {
 
     public final AnswerServiceImp answerService;
@@ -27,7 +34,8 @@ public class AnswerController {
      * @return
      */
     @GetMapping("/{questionId}")
-    public List<AnswerResponse> getAllAnswers(@PathVariable("questionId") Long questionId) {
+    @Operation(summary = "Получение списка ответов по id вопроса")
+    public List<AnswerResponse> getAllAnswers(@Parameter(description = "id вопроса")@PathVariable("questionId") Long questionId) {
         return answerService.getAllAnswers(questionId);
     }
 
@@ -38,7 +46,8 @@ public class AnswerController {
      * @return
      */
     @GetMapping("/answer/{id}")
-    public AnswerResponse getAnswer(@PathVariable("id") Long id) {
+    @Operation(summary = "Получение ответа по id")
+    public AnswerResponse getAnswer(@Parameter(description = "id ответа")@PathVariable("id") Long id) {
         return answerService.getAnswerById(id);
     }
 
@@ -50,6 +59,7 @@ public class AnswerController {
      * @return
      */
     @PostMapping("/new_answer")
+    @Operation(summary = "Создание ответа")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid AnswerRequest answerRequest) {
 
         answerService.saveAnswer(answerRequest);
@@ -62,21 +72,23 @@ public class AnswerController {
      * @param id
      * @return
      */
-    @DeleteMapping("/delete_answer/{id}")
-    public ResponseEntity<HttpStatus> deleteAnswer(@PathVariable("id") Long id) {
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Удаление ответа по id")
+    public ResponseEntity<HttpStatus> deleteAnswer(@Parameter(description = "id ответа")@PathVariable("id") Long id) {
         answerService.deleteAnswer(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     /**
-     * апдейт ответа
+     * обновление ответа
      *
      * @param
      * @return
      */
-    @PutMapping("/update_answer")
-    public ResponseEntity<HttpStatus> updateAnswer(@RequestBody AnswerRequest answerRequest) {
-        answerService.updateAnswer(answerRequest);
+    @PutMapping("/{id}")
+    @Operation(summary = "обновление ответа по id")
+    public ResponseEntity<HttpStatus> updateAnswer(@Parameter(description = "id ответа") @PathVariable("id") Long id, @RequestBody AnswerRequest answerRequest) {
+        answerService.updateAnswer(id, answerRequest);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

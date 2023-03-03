@@ -1,6 +1,9 @@
 package ru.bondarev.questionary.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/persons")
 @RequiredArgsConstructor
+@Tag(
+        name = "Пользователи",
+        description = "Все методы для работы с пользователями"
+)
 public class PersonController {
 
     private  final PersonServiceImp personService;
@@ -27,6 +34,7 @@ public class PersonController {
      * @return
      */
     @GetMapping()
+    @Operation(summary = "Получение списка пользователей")
     public List<PersonResponse> getAllPerson() {
         return personService.getAllPerson();
     }
@@ -37,7 +45,8 @@ public class PersonController {
      * @return
      */
     @GetMapping("/{id}")
-    public PersonResponse getPersonById(@PathVariable("id")Long id) {
+    @Operation(summary = "Получение  пользователя по id")
+    public PersonResponse getPersonById( @Parameter(description = "id пользователя") @PathVariable("id")Long id) {
         return personService.getPersonById(id);
     }
 
@@ -47,6 +56,7 @@ public class PersonController {
      * @return
      */
     @PostMapping()
+    @Operation(summary = "сохранение(регистрация) нового пользователя")
     public ResponseEntity<HttpStatus> create(@RequestBody  PersonRequest personRequest) {
 
         personService.savePerson(personRequest);
@@ -60,19 +70,21 @@ public class PersonController {
      * @return
      */
     @DeleteMapping ("/{id}")
-    public ResponseEntity<HttpStatus> deletePersonById(@PathVariable("id") Long id) {
+    @Operation(summary = "удаление пользователя по id")
+    public ResponseEntity<HttpStatus> deletePersonById(@Parameter(description = "id пользователя") @PathVariable("id") Long id) {
         personService.deletePerson(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     /**
-     * апдейт пользователя
+     * обновление  пользователя
      *
      * @param personRequest
      * @return
      */
     @PutMapping("/{id}")
-    public ResponseEntity<HttpStatus> updatePerson(@PathVariable("id") Long id,@RequestBody PersonRequest personRequest) {
+    @Operation(summary = "обновление  пользователя")
+    public ResponseEntity<HttpStatus> updatePerson(@Parameter(description = "id пользователя") @PathVariable("id") Long id,@RequestBody PersonRequest personRequest) {
         personService.updatePerson(id, personRequest);
         return ResponseEntity.ok(HttpStatus.OK);
     }

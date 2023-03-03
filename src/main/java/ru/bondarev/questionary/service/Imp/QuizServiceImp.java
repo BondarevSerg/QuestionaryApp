@@ -80,8 +80,8 @@ public class QuizServiceImp implements QuizService {
      * @param quizRequest
      */
     @Override
-    public void updateQuiz(QuizRequest quizRequest) {
-        var quiz = quizRepository.findById(quizRequest.getId())
+    public void updateQuiz(Long id, QuizRequest quizRequest) {
+        var quiz = quizRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найдена анкета"));
         quiz.setTitle(quizRequest.getTitle());
         quiz.setQuestions(questionMapper.requestToEntityList(quizRequest.getQuestionRequestList()));

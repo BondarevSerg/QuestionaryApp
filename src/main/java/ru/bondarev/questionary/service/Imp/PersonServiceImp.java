@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.bondarev.questionary.dto.request.PersonRequest;
 import ru.bondarev.questionary.dto.response.PersonResponse;
 import ru.bondarev.questionary.entity.Person;
+import ru.bondarev.questionary.entity.Role;
 import ru.bondarev.questionary.mapper.PersonMapper;
 import ru.bondarev.questionary.repositories.PersonRepository;
 import ru.bondarev.questionary.service.PersonService;
@@ -77,7 +78,7 @@ public class PersonServiceImp implements PersonService {
                 .orElseThrow(() -> new RuntimeException("Не найден персон по идентификатору: " + id));
         //админ не может себя удалить
         Set<String> roles = person.getRoles().stream()
-                .map(role -> role.getName())
+                .map(Role::getName)
                 .collect(Collectors.toSet());
 
         if (!(roles.contains("ROLE_ADMIN"))) {

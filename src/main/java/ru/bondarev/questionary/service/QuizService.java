@@ -2,7 +2,7 @@ package ru.bondarev.questionary.service;
 
 import ru.bondarev.questionary.dto.request.QuizRequest;
 import ru.bondarev.questionary.dto.response.QuizResponse;
-import ru.bondarev.questionary.entity.Quiz;
+
 
 import java.util.List;
 
@@ -42,6 +42,6 @@ public interface QuizService {
     /**
      * апдейт анкеты
      */
-    void updateQuiz(QuizRequest quizRequest);
+    void updateQuiz(Long id, QuizRequest quizRequest);
 
 }
