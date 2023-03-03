@@ -45,5 +45,5 @@ public interface QuizResultService {
      */
 
 
-    void updateQuizResult(QuizResultRequest quizResultRequest);
+    void updateQuizResult(Long id, QuizResultRequest quizResultRequest);
 }

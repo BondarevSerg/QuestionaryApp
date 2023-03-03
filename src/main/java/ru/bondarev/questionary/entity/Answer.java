@@ -2,6 +2,8 @@ package ru.bondarev.questionary.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -29,6 +31,7 @@ public class Answer {
      */
     @ManyToOne
     @JoinColumn(name = "questionID", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Question question;
 
     /**

@@ -46,6 +46,6 @@ public interface QuestionService {
     /**
      * апдейт вопроса
      */
-    void updateQuestion(QuestionRequest questionRequest);
+    void updateQuestion(Long id, QuestionRequest questionRequest);
 
 }

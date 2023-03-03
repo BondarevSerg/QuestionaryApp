@@ -25,12 +25,12 @@ public class WebSecurityConfig {
     private final PersonDetailsService personDetailsService;
 
 
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
+
+         http
                 .csrf().disable()
-                .authorizeHttpRequests((requests) -> requests
+                .authorizeHttpRequests(requests -> requests
                         .requestMatchers(HttpMethod.GET, "/persons").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/persons").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/persons").hasAnyRole("USER","ADMIN")
@@ -51,10 +51,11 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/quizresults").hasAnyRole("USER","ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/quizresults").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/quizresults").hasRole("ADMIN")
-                        .anyRequest().hasAnyRole("USER", "ADMIN"))
+                        .anyRequest().authenticated())
                 .userDetailsService(personDetailsService)
-                .httpBasic(withDefaults())
-                .build();
+                .httpBasic(withDefaults());
+
+         return http.build();
     }
 
 
@@ -62,4 +63,7 @@ public class WebSecurityConfig {
     PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
+
 }

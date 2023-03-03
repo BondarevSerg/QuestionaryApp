@@ -26,26 +26,28 @@ INSERT INTO quizes(title) values ('numbers');
  /**
    вопросы
   */
-INSERT INTO Questions(quizID, title) values (1 , 'your favorite color of the two');
-INSERT INTO Questions(quizID, title) values (1 , 'your least favorite color of the two');
-INSERT INTO Questions(quizID, title) values (2 , 'your favorite number of the two');
-INSERT INTO Questions(quizID, title) values (2 , 'your least favorite number of the two');
+INSERT INTO Questions(quizID, title) values (1 , 'выберите любимый цвет');
+INSERT INTO Questions(quizID, title) values (1 , 'выберите нелюбимый цвет');
+INSERT INTO Questions(quizID, title) values (2 , 'выберите любимое число');
+INSERT INTO Questions(quizID, title) values (2 , 'выберите нелюбимое число');
 /**
   ответы
  */
-INSERT INTO Answers(questionID, answer) values (1 , 'red');
-INSERT INTO Answers(questionID, answer) values (1 , 'blue');
-INSERT INTO Answers(questionID, answer) values (2 , 'white');
-INSERT INTO Answers(questionID, answer) values (2 , 'black');
+INSERT INTO Answers(questionID, answer) values (1 , 'красный');
+INSERT INTO Answers(questionID, answer) values (1 , 'синий');
+INSERT INTO Answers(questionID, answer) values (2 , 'белый');
+INSERT INTO Answers(questionID, answer) values (2 , 'черный');
 
-INSERT INTO Answers(questionID, answer) values (3 , 'one');
-INSERT INTO Answers(questionID, answer) values (3 , 'two');
-INSERT INTO Answers(questionID, answer) values (4 , 'five');
-INSERT INTO Answers(questionID, answer) values (4 , 'six');
+INSERT INTO Answers(questionID, answer) values (3 , 'один');
+INSERT INTO Answers(questionID, answer) values (3 , 'два');
+INSERT INTO Answers(questionID, answer) values (4 , 'пять');
+INSERT INTO Answers(questionID, answer) values (4 , 'шесть');
 /**
   результат опроса user: анкета "color", любимый цвет - синий
+  нелюбимый - черный
  */
 INSERT INTO quizresult(personId, quizId, questionId, answerId) values ( 2, 1, 1, 2 );
+INSERT INTO quizresult(personId, quizId, questionId, answerId) values ( 2, 1, 2, 2 );
 
 
 

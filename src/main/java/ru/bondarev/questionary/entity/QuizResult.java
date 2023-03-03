@@ -2,6 +2,8 @@ package ru.bondarev.questionary.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  * Результат опроса
@@ -28,6 +30,7 @@ public class QuizResult {
      */
     @ManyToOne
     @JoinColumn(name = "personid", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Person person;
 
     /**
@@ -35,6 +38,7 @@ public class QuizResult {
      */
     @ManyToOne
     @JoinColumn(name = "quizid", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Quiz quiz;
 
     /**
@@ -42,6 +46,7 @@ public class QuizResult {
      */
     @ManyToOne
     @JoinColumn(name = "questionid", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Question question;
 
     /**
@@ -49,6 +54,7 @@ public class QuizResult {
      */
     @ManyToOne
     @JoinColumn(name = "answerid", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Answer answer;
 
 }

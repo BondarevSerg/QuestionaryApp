@@ -45,7 +45,7 @@ public interface AnswerService {
     /**
      * апдейт вопроса
      */
-    void updateAnswer(AnswerRequest answerRequest);
+    void updateAnswer(Long id, AnswerRequest answerRequest);
 
 }
 

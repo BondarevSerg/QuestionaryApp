@@ -84,8 +84,8 @@ public class AnswerServiceImp implements AnswerService {
      * @param answerRequest
      */
     @Override
-    public void updateAnswer(AnswerRequest answerRequest) {
-        var answer = answerRepository.findById(answerRequest.getId())
+    public void updateAnswer(Long id, AnswerRequest answerRequest) {
+        var answer = answerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найден ответ по идентификатору: "));
 
         answer.setTitle(answerRequest.getTitle());

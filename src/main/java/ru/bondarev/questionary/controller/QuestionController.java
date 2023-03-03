@@ -1,5 +1,8 @@
 package ru.bondarev.questionary.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/questions")
 @RequiredArgsConstructor
+@Tag(
+        name = "Вопросы",
+        description = "Все методы для работы с вопросами"
+)
 public class QuestionController {
 
    private final QuestionService questionService;
@@ -28,7 +35,8 @@ public class QuestionController {
      * @return
      */
     @GetMapping("/{quizid}")
-    public List<QuestionResponse> getAllQuestion(@PathVariable("quizid") Long quizId) {
+    @Operation(summary = "Получение списка вопросов по id анкеты")
+    public List<QuestionResponse> getAllQuestion(@Parameter(description = "id анкеты")@PathVariable("quizid") Long quizId) {
         return questionService.getAllQuestion(quizId);
     }
 
@@ -39,7 +47,8 @@ public class QuestionController {
      * @return
      */
     @GetMapping("question/{id}")
-    public QuestionResponse getQuestion( @PathVariable("id") Long id) {
+    @Operation(summary = "Получение  вопроса по id")
+    public QuestionResponse getQuestion(@Parameter(description = "id вопроса") @PathVariable("id") Long id) {
         return questionService.getQuestionById(id);
     }
 
@@ -50,6 +59,7 @@ public class QuestionController {
      * @return
      */
     @PostMapping()
+    @Operation(summary = "Сохранение вопроса")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid QuestionRequest questionRequest) {
 
         questionService.saveQuestion(questionRequest);
@@ -62,20 +72,24 @@ public class QuestionController {
      * @return
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteQuestionById(@PathVariable("id") Long id) {
+    @Operation(summary = "Удаление вопроса")
+    public ResponseEntity<HttpStatus> deleteQuestionById(@Parameter(description = "id вопроса")@PathVariable("id") Long id) {
         questionService.deleteQuestion(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     /**
-     * апдейт вопроса
+     * обновление вопроса
      *
      * @param questionRequest
      * @return
      */
     @PutMapping("/question_update")
-    public ResponseEntity<HttpStatus> updateQuestion(@RequestBody QuestionRequest questionRequest) {
-        questionService.updateQuestion(questionRequest);
+    @Operation(summary = "Обновление вопроса")
+    public ResponseEntity<HttpStatus> updateQuestion(@Parameter(description = "id вопроса")
+                                                         @PathVariable("id") Long id,
+                                                         @RequestBody QuestionRequest questionRequest) {
+        questionService.updateQuestion(id, questionRequest);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

@@ -72,8 +72,8 @@ public class QuizResultServiceImp implements QuizResultService {
      * @param quizResultRequest
      */
     @Override
-    public void updateQuizResult(QuizResultRequest quizResultRequest) {
-        var quizResult = quizResultRepository.findById(quizResultRequest.getId())
+    public void updateQuizResult(Long id, QuizResultRequest quizResultRequest) {
+        var quizResult = quizResultRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найден результат по id"));
 
         quizResult.setPerson(Person.builder()
