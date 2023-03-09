@@ -10,6 +10,7 @@ import ru.bondarev.questionary.repositories.*;
 import ru.bondarev.questionary.service.QuizResultService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * сервис работы с результатом
@@ -21,7 +22,7 @@ public class QuizResultServiceImp implements QuizResultService {
 
     private final QuizResultRepository quizResultRepository;
   
-    private final QuizResultMapper quizResultMapper;
+
 
     /**
      * список результатов
@@ -31,7 +32,9 @@ public class QuizResultServiceImp implements QuizResultService {
     @Override
     public List<QuizResultResponse> getAllQuizResult() {
 
-        return quizResultMapper.listEntityToResponse(quizResultRepository.findAll());
+        return quizResultRepository.findAll().stream()
+                .map(quizResult -> QuizResultMapper.INSTANCE.toDTO(quizResult))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -43,7 +46,9 @@ public class QuizResultServiceImp implements QuizResultService {
     @Override
     public List<QuizResultResponse> getQuizResultsByPersonId(Long personId) {
 
-        return quizResultMapper.listEntityToResponse(quizResultRepository.findAllByPersonId(personId));
+        return quizResultRepository.findAllByPersonId(personId).stream()
+                .map(quizResult -> QuizResultMapper.INSTANCE.toDTO(quizResult))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -53,7 +58,7 @@ public class QuizResultServiceImp implements QuizResultService {
     @Override
     public void saveQuizResult(QuizResultRequest quizResultRequest) {
 
-        quizResultRepository.save(quizResultMapper.requestToEntity(quizResultRequest));
+        quizResultRepository.save(QuizResultMapper.INSTANCE.toEntity(quizResultRequest));
 
 
     }

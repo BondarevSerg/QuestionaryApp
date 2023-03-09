@@ -11,6 +11,7 @@ import ru.bondarev.questionary.repositories.AnswerRepository;
 import ru.bondarev.questionary.service.AnswerService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Сервис по работе с ответами
@@ -23,7 +24,7 @@ public class AnswerServiceImp implements AnswerService {
 
     public final AnswerRepository answerRepository;
 
-    public final AnswerMapper answerMapper;
+
 
     /**
      * dto ответа по id
@@ -36,7 +37,7 @@ public class AnswerServiceImp implements AnswerService {
         var answer = answerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найден вопрос по идентификатору: " + id));
 
-        return answerMapper.entityToResponse(answer);
+        return AnswerMapper.INSTANCE.toDTO(answer);
     }
 
     /**
@@ -48,7 +49,9 @@ public class AnswerServiceImp implements AnswerService {
     @Override
     public List<AnswerResponse> getAllAnswers(Long questionId) {
         List<Answer> answers = answerRepository.findAllByQuestionId(questionId);
-        return answerMapper.entityToResponseList(answers);
+        return answers.stream()
+                .map(answer -> AnswerMapper.INSTANCE.toDTO(answer))
+                .collect(Collectors.toList());
     }
 
 
@@ -59,13 +62,7 @@ public class AnswerServiceImp implements AnswerService {
     @Override
     public void saveAnswer(AnswerRequest answerRequest) {
         answerRepository.save(
-                Answer.builder()
-                        .id(answerRequest.getId())
-                        .title(answerRequest.getTitle())
-                        .question(Question.builder()
-                                .id(answerRequest.getQuestionId())
-                                .build())
-                        .build());
+                AnswerMapper.INSTANCE.toEntity(answerRequest));
     }
 
     /**
@@ -80,7 +77,7 @@ public class AnswerServiceImp implements AnswerService {
     }
 
     /**
-     * апдейт ответа
+     * обновление ответа
      * @param answerRequest
      */
     @Override

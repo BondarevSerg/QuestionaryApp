@@ -24,7 +24,7 @@ public class PersonServiceImp implements PersonService {
 
     private final PersonRepository personRepository;
 
-    private final PersonMapper personMapper;
+
 
     /**
      * поиск пользователя по id
@@ -36,7 +36,7 @@ public class PersonServiceImp implements PersonService {
     public PersonResponse getPersonById(Long id) {
         Person person = personRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найден персон по идентификатору: " + id));
-        return personMapper.entityToResponse(person);
+        return PersonMapper.INSTANCE.toDTO(person);
     }
 
     /**
@@ -47,8 +47,24 @@ public class PersonServiceImp implements PersonService {
     @Override
     public List<PersonResponse> getAllPerson() {
         List<Person> personList = personRepository.findAll();
+        return personList.stream()
+                .map(person -> PersonMapper.INSTANCE.toDTO(person))
+                .collect(Collectors.toList());
 
-        return personMapper.entityToResponseList(personList);
+    }
+
+    /**
+     * список всех пользователей c ролью USER
+     *
+     * @return
+     */
+    @Override
+    public List<PersonResponse> getAllUserPerson() {
+        List<Person> personUserList = personRepository.findAllUserPerson("ROLE_USER");
+        return personUserList.stream()
+                .map(person -> PersonMapper.INSTANCE.toDTO(person))
+                .collect(Collectors.toList());
+
     }
 
 
@@ -63,7 +79,7 @@ public class PersonServiceImp implements PersonService {
         Optional<Person> person = Optional.ofNullable(personRepository.findByLogin(personRequest.getLogin()));
 
         if (person.isEmpty()) {
-            personRepository.save(personMapper.requestToEntity(personRequest));
+            personRepository.save(PersonMapper.INSTANCE.toEntity(personRequest));
         }
     }
 

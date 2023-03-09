@@ -40,6 +40,17 @@ public class PersonController {
     }
 
     /**
+     * Получение списка пользователей c ролью юзер
+     *
+     * @return
+     */
+    @GetMapping("/users")
+    @Operation(summary = "Получение списка пользователей c ролью юзер")
+    public List<PersonResponse> getAllUsersPerson() {
+        return personService.getAllUserPerson();
+    }
+
+    /**
      * Получение  пользователя по id
      *
      * @return

@@ -58,7 +58,7 @@ public class AnswerController {
      * @param
      * @return
      */
-    @PostMapping("/new_answer")
+    @PostMapping()
     @Operation(summary = "Создание ответа")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid AnswerRequest answerRequest) {
 

@@ -11,12 +11,7 @@ import java.util.List;
 @Data
 public class QuizRequest {
 
-
-    private Long id;
-
-
     private String title;
 
-
-    private List<QuestionRequest> questionRequestList;
+    private List<QuestionRequest> questions;
 }

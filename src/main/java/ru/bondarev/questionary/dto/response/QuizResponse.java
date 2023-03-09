@@ -1,8 +1,10 @@
 package ru.bondarev.questionary.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import ru.bondarev.questionary.entity.Question;
+import lombok.NoArgsConstructor;
+
 
 import java.util.List;
 
@@ -11,6 +13,8 @@ import java.util.List;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class QuizResponse {
 
     private Long id;
