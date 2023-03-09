@@ -15,7 +15,7 @@ INSERT INTO roles VALUES (1, 'ROLE_USER');
 INSERT INTO roles VALUES (2, 'ROLE_ADMIN');
 
 INSERT INTO person_roles values (1 , 2);
-INSERT INTO person_roles values (1 , 1);
+-- INSERT INTO person_roles values (1 , 1);
 INSERT INTO person_roles values (2 , 1);
 
 /*

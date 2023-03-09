@@ -12,11 +12,11 @@ import java.util.List;
 public class QuizRequest {
 
 
-    private Long id;
+//    private Long id;
 
 
     private String title;
 
 
-    private List<QuestionRequest> questionRequestList;
+    private List<QuestionRequest> questions;
 }

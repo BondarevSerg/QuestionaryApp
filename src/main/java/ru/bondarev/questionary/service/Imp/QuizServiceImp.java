@@ -12,6 +12,7 @@ import ru.bondarev.questionary.repositories.QuizRepository;
 import ru.bondarev.questionary.service.QuizService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Сервис по работе с анкетой
@@ -21,9 +22,9 @@ import java.util.List;
 public class QuizServiceImp implements QuizService {
 
     private final QuizRepository quizRepository;
-    private final QuizMapper quizMapper;
 
-    private final QuestionMapper questionMapper;
+
+
 
 
     /**
@@ -37,7 +38,7 @@ public class QuizServiceImp implements QuizService {
         var quiz = quizRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найдена анкета по идентификатору: " + id));
 
-        return quizMapper.entityToResponse(quiz);
+        return QuizMapper.INSTANCE.toDTO(quiz);
     }
 
     /**
@@ -49,7 +50,9 @@ public class QuizServiceImp implements QuizService {
     public List<QuizResponse> getAllQuiz() {
         List<Quiz> quizzes = quizRepository.findAll();
 
-        return quizMapper.entityToResponseList(quizzes);
+        return quizzes.stream()
+                .map(quiz -> QuizMapper.INSTANCE.toDTO(quiz))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -60,7 +63,7 @@ public class QuizServiceImp implements QuizService {
     @Override
     @Transactional
     public void saveQuiz(QuizRequest quizRequest) {
-        quizRepository.save(quizMapper.requestToEntity(quizRequest));
+        quizRepository.save(QuizMapper.INSTANCE.toEntity(quizRequest));
     }
 
     /**
@@ -84,7 +87,9 @@ public class QuizServiceImp implements QuizService {
         var quiz = quizRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найдена анкета"));
         quiz.setTitle(quizRequest.getTitle());
-        quiz.setQuestions(questionMapper.requestToEntityList(quizRequest.getQuestionRequestList()));
+        quiz.setQuestions(quizRequest.getQuestions().stream()
+                .map(questionRequest -> QuestionMapper.INSTANCE.toEntity(questionRequest))
+                .collect(Collectors.toList()));
 
         quizRepository.save(quiz);
     }

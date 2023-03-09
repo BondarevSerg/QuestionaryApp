@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class AnswerRequest {
 
-    private long id;
+//    private long id;
 
     private String title;
 

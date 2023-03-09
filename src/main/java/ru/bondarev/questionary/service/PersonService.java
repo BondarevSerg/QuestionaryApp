@@ -18,6 +18,15 @@ public interface PersonService {
      * @return
      */
     List<PersonResponse> getAllPerson();
+    /**
+     * Получения всех пользователей с ролью user
+     *
+     * @return
+     */
+    List<PersonResponse> getAllUserPerson() ;
+
+
+
 
     /**
      * Получения персона по id

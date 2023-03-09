@@ -2,7 +2,6 @@ package ru.bondarev.questionary.service.Imp;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.bondarev.questionary.dto.request.QuestionRequest;
 import ru.bondarev.questionary.dto.response.QuestionResponse;
 import ru.bondarev.questionary.entity.Quiz;
@@ -12,6 +11,7 @@ import ru.bondarev.questionary.repositories.QuestionRepository;
 import ru.bondarev.questionary.service.QuestionService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Сервис работы с вопросами
@@ -21,8 +21,8 @@ import java.util.List;
 public class QuestionServiceImp implements QuestionService {
 
     private final QuestionRepository questionRepository;
-    private final QuestionMapper questionMapper;
-    private final AnswerMapper answerMapper;
+
+
 
 
     /**
@@ -36,7 +36,7 @@ public class QuestionServiceImp implements QuestionService {
         var question = questionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Не найден вопрос по id"));
 
-        return questionMapper.entityToResponse(question);
+        return QuestionMapper.INSTANCE.toDTO(question);
 
     }
 
@@ -48,7 +48,9 @@ public class QuestionServiceImp implements QuestionService {
      */
     @Override
     public List<QuestionResponse> getAllQuestion(Long quizId) {
-        return questionMapper.entityToResponse(questionRepository.findAllByQuizId(quizId));
+        return questionRepository.findAllByQuizId(quizId).stream()
+                .map(question -> QuestionMapper.INSTANCE.toDTO(question))
+                .collect(Collectors.toList());
 
 
     }
@@ -62,7 +64,7 @@ public class QuestionServiceImp implements QuestionService {
 
     public void saveQuestion(QuestionRequest questionRequest) {
 
-        questionRepository.save(questionMapper.requestToEntity(questionRequest));
+        questionRepository.save(QuestionMapper.INSTANCE.toEntity(questionRequest));
     }
 
     /**
@@ -92,9 +94,11 @@ public class QuestionServiceImp implements QuestionService {
 
         question.setTitle(questionRequest.getTitle());
         question.setQuiz(Quiz.builder()
-                .id(questionRequest.getQuizID())
+                .id(questionRequest.getQuizId())
                 .build());
-        question.setAnswers(answerMapper.requestToEntityList(questionRequest.getAnswerRequestList()));
+        question.setAnswers(questionRequest.getAnswerRequestList().stream()
+                .map(answerRequest -> AnswerMapper.INSTANCE.toEntity(answerRequest))
+                .collect(Collectors.toList()));
 
         questionRepository.save(question);
 
