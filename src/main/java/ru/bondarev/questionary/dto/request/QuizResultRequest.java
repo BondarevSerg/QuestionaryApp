@@ -5,8 +5,6 @@ import lombok.Data;
 @Data
 public class QuizResultRequest {
 
-//    private Long id;
-
     private Long personId;
 
     private Long quizId;

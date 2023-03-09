@@ -7,7 +7,6 @@ import ru.bondarev.questionary.dto.response.AnswerResponse;
 import ru.bondarev.questionary.entity.Answer;
 import ru.bondarev.questionary.entity.Question;
 import ru.bondarev.questionary.mapper.AnswerMapper;
-import ru.bondarev.questionary.mapper.PersonMapper;
 import ru.bondarev.questionary.repositories.AnswerRepository;
 import ru.bondarev.questionary.service.AnswerService;
 

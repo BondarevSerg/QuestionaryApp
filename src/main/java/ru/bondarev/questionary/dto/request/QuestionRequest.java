@@ -8,8 +8,6 @@ import java.util.List;
 @Data
 public class QuestionRequest {
 
-//    private Long id;
-
     private String title;
 
     private Long quizId;

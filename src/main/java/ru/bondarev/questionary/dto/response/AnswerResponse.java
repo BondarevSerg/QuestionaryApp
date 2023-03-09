@@ -6,7 +6,7 @@ import lombok.Data;
 @Builder
 public class AnswerResponse {
 
-    private long id;
+    private Long id;
 
     private String title;
 
