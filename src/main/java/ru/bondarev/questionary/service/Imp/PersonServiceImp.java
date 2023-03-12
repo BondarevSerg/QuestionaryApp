@@ -8,11 +8,10 @@ import ru.bondarev.questionary.entity.Person;
 import ru.bondarev.questionary.entity.Role;
 import ru.bondarev.questionary.mapper.PersonMapper;
 import ru.bondarev.questionary.repositories.PersonRepository;
+import ru.bondarev.questionary.repositories.RoleRepository;
 import ru.bondarev.questionary.service.PersonService;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 public class PersonServiceImp implements PersonService {
 
     private final PersonRepository personRepository;
-
+    private  final RoleRepository roleRepository;
 
 
     /**
@@ -79,7 +78,9 @@ public class PersonServiceImp implements PersonService {
         Optional<Person> person = Optional.ofNullable(personRepository.findByLogin(personRequest.getLogin()));
 
         if (person.isEmpty()) {
-            personRepository.save(PersonMapper.INSTANCE.toEntity(personRequest));
+            Person newPerson = PersonMapper.INSTANCE.toEntity(personRequest);
+            newPerson.setRoles(Collections.singleton(roleRepository.findByName("ROLE_USER")));
+            personRepository.save(newPerson);
         }
     }
 
